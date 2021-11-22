@@ -19,7 +19,7 @@ contract FundMe {
     }
 
     function fund() public payable {
-        uint256 minimumUSD = 50 * 10**18;
+        uint256 minimumUSD = 50e18;
         require(
             getConversionRate(msg.value) >= minimumUSD,
             "You need to spend more ETH!"
@@ -30,7 +30,7 @@ contract FundMe {
 
     function getPrice() public view returns (uint256) {
         (, int256 answer, , , ) = priceFeed.latestRoundData();
-        return uint256(answer * 10**10);
+        return uint256(answer * 1e10);
     }
 
     function getConversionRate(uint256 ethAmount)
@@ -39,14 +39,14 @@ contract FundMe {
         returns (uint256)
     {
         uint256 ethPrice = getPrice();
-        uint256 ethAmountInUsd = (ethPrice * ethAmount) / 10**18;
+        uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1e18;
         return ethAmountInUsd;
     }
 
     function getEntranceFee() public view returns (uint256) {
-        uint256 minimumUSD = 50 * 10**18;
+        uint256 minimumUSD = 50e18;
         uint256 price = getPrice();
-        return ((minimumUSD * 10**18) / price) + 1;
+        return ((minimumUSD * 1e18) / price) + 1;
     }
 
     modifier onlyOwner() {

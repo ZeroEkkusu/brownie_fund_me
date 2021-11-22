@@ -2,7 +2,7 @@ from brownie import accounts, network, config, MockV3Aggregator
 from web3 import Web3
 
 DECIMALS = 8
-STARTING_PRICE = 2000*10**8
+STARTING_PRICE = 2000e8
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
@@ -16,11 +16,10 @@ def get_account():
 
 
 def deploy_mocks():
-    print(f"The active network is {network.show_active()}")
-    print("Deploying Mocks...")
+    print(f"The active network is {network.show_active()}\n")
+    print("Deploying Mocks...\n")
     if(len(MockV3Aggregator) <= 0):
         MockV3Aggregator.deploy(
             DECIMALS, STARTING_PRICE, {"from": get_account()})
-        print("Mocks Deployed!")
     else:
-        print("Mocks Already Deployed!")
+        print("Mocks Already Deployed!\n")
